@@ -1,0 +1,15 @@
+main{
+    min-height: 80vh;
+}
+
+.pro-price{
+    padding: 0.8rem 0;
+}
+
+.rating span{
+    margin: 0.05rem;
+}
+
+.product .go-back:hover{
+    background-color: #ddd;
+}
