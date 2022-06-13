@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 
-import { listProducts } from "../actions";
+import { listProducts, listProductDetails } from "../actions";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 import Product from "../components/Product";
 
 const HomeScreen = ({ productList, listProducts }) => {
@@ -15,9 +17,9 @@ const HomeScreen = ({ productList, listProducts }) => {
     <div>
       <h1>Latest Products</h1>
       {loading ? (
-        <h2>Loading ...</h2>
+        <Loader />
       ) : error ? (
-        <h3>{error}</h3>
+        <Message variant="danger">{error}</Message>
       ) : (
         <Row>
           {products.map((product) => (
@@ -34,10 +36,12 @@ const HomeScreen = ({ productList, listProducts }) => {
 const mapStateToProps = (state) => {
   return {
     productList: state.productList,
+    productDetails: state.productDetails,
   };
 };
 const actions = {
   listProducts,
+  listProductDetails,
 };
 
 export default connect(mapStateToProps, actions)(HomeScreen);
