@@ -2,20 +2,14 @@ import React, { useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 
-import { listProducts, listProductDetails } from "../actions";
+import { listProducts } from "../actions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Product from "../components/Product";
 
-const HomeScreen = ({ productList, listProducts }) => {
-  const { error, loading, products } = productList;
-  useEffect(() => {
-    listProducts();
-  }, []);
-
+const ProductsRow = ({ loading, error, products }) => {
   return (
-    <div>
-      <h1>Latest Products</h1>
+    <React.Fragment>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -29,19 +23,33 @@ const HomeScreen = ({ productList, listProducts }) => {
           ))}
         </Row>
       )}
+    </React.Fragment>
+  );
+};
+
+///////////////////// Home Screen Start ///////////////////////
+const HomeScreen = ({ productList, listProducts }) => {
+  const { loading, error, products } = productList;
+  useEffect(() => {
+    listProducts();
+  }, []);
+
+  return (
+    <div>
+      <h1>Latest Products</h1>
+      <ProductsRow loading={loading} error={error} products={products} />
     </div>
   );
 };
+///////////////////// Home Screen End ////////////////////////
 
 const mapStateToProps = (state) => {
   return {
     productList: state.productList,
-    productDetails: state.productDetails,
   };
 };
 const actions = {
   listProducts,
-  listProductDetails,
 };
 
 export default connect(mapStateToProps, actions)(HomeScreen);
